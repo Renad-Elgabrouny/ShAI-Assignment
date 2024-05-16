@@ -99,116 +99,71 @@ train_df = train_df[(train_df["depth"] >= 50) & (train_df["depth"] <= 75)] # Vis
 ```
 this code gives the number of rows that have values of carat more than 75 and less than 50
 We found there are 14 rows So,we drop it as it is a small value to drop (It wont affect)
-### 9)
+### 3.2.11 Handling Outliers in table
 ``` python
-sns.scatterplot(x=train_df["table"], y=train_df["price"])     
-```
-scatter plot visualizes the correlation between two numerical values
-
-the insights we found :
-
-
-1) there are noticed outliers in table  before the value 50 and after value 70 
-### 10)
-``` python
+sns.scatterplot(x=train_df["table"], y=train_df["price"])
 print(f"Table Outliers : {len(train_df[(train_df['table'] < 50) | (train_df['table'] > 70)])}") # Visualization
-train_df = train_df[(train_df["table"] >= 50) & (train_df["table"] <= 70)] # Visulization
+train_df = train_df[(train_df["table"] >= 50) & (train_df["table"] <= 70)] # Visulization  
 ```
-this code gives the number of rows that have values of carat more than 70 and less than 50
-We found there are 9 rows So,we drop it as it is a small value to drop (It wont affect)
-### 11)
-``` python
-sns.scatterplot(data=train_df, x="x", y="price")  
-```
-scatter plot visualizes the correlation between two numerical values
+**Insights :**
+- there are noticed outliers in table  feature less than 50 and less than 70
+- A such of total 9 rows containing these outliers were removed
 
-the insights we found :
-
-1) there are noticed outliers in x  after value 9 
-### 12)
+### 3.2.12 Handling Outliers in x
 ``` python
+# This code gives the number of rows that have values of x more than 9
+sns.scatterplot(data=train_df, x="x", y="price")
 print(f"X Outliers : {len(train_df[train_df['x'] > 9])}") # Visualization
 train_df = train_df[train_df["x"] <= 9]
 ```
-this code gives the number of rows that have values of x more than 9
-We found there are 10 rows So,we drop it as it is a small value to drop (It wont affect)
-### 13)
+**Insights :**
+- here are noticed outliers in x  feature more than 9 
+- A such of total 10 rows containing these outliers were removed
+### 3.2.13 Handling Outliers in y
 ``` python
+# This code gives the number of rows that have values of y more than 10
 sns.scatterplot(data=train_df, x="y", y="price")
+print(f"Y Outliers : {len(train_df[train_df['y'] > 9])}") # Visualization
+train_df = train_df[train_df["y"] <= 9]
 ```
-scatter plot visualizes the correlation between two numerical values
-
-the insights we found :
-
-1) there are noticed outliers in y  after value 10
-### 14)
-``` python
-print(f"Y Outliers : {len(train_df[train_df['y'] > 10])}") # Visualization
-train_df = train_df[train_df["x"] <= 9]
-```
-this code gives the number of rows that have values of y more than 10
-We found there are 0 rows So,we drop it to make sure that there is not
-### 15)
+**Insights :**
+- there are noticed outliers in y  greater than 10
+- there are 0 rows So,we drop it to make sure that there is not
+### 3.2.14 Handling Outliers in z
 ``` python
 sns.scatterplot(data=train_df, x="z", y="price")
-```
-scatter plot visualizes the correlation between two numerical values
-
-the insights we found :
-
-1) there are noticed outliers in z  after value 10
-### 16)
-``` python
+#The number of rows that have values of z more than 7 and less than 2
 print(f"Z Outliers : {len(train_df[(train_df['z'] < 2) | (train_df['z'] > 7)])}") # Visualization
 train_df = train_df[(train_df["z"] >= 2) & (train_df["z"] <= 7)]
 ```
-this code gives the number of rows that have values of z more than 7 and less than 2
-We found there are 0 rows So,we drop it to make sure that there is not
-
-### 17)
-``` python
-train_df["price"].hist(bins=50)
-```
-this code gives the number of rows that have values of x more than 7 and less than 2
-We found there are 0 rows So,we drop it to make sure that there is not
-### 18)
+**Insights :**
+- there are noticed outliers in z  greater than 10
+- there are 0 rows So,we drop it to make sure that there is not
+### 3.2.15 Countplot
 ``` python
 ``` python
 mean_price_by_cut = train_df_copy.groupby("cut")["price"].mean().reindex(cut_column_unique_ordered)
-
-# Create subplots
 fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
 sns.countplot(data=train_df_copy, x="cut", order=cut_column_unique_ordered, ax=axes[0], palette='rocket')
 axes[0].set_title("Count of Diamonds by Cut")
 axes[0].set_xlabel("Cut")
 axes[0].set_ylabel("Count")
-
 sns.barplot(x=mean_price_by_cut.index, y=mean_price_by_cut.values, ax=axes[1], palette='rocket')
 axes[1].set_title("Mean Price of Diamonds by Cut")
 axes[1].set_xlabel("Cut")
 axes[1].set_ylabel("Mean Price")
 
-# # Adjust layout
-# plt.tight_layout()
-
-# Show plot
 plt.show()
 ```
 This code will generate two side-by-side plots: one showing the count of diamonds for each cut category and another showing the mean price of diamonds for each cut category.
 We found there are 0 rows So,we drop it to make sure that there is not
 
-####the insights we found :
-
-
-1) cut (J) that have the smallest count has the largest price average
-### 19)
+**Insights :**
+- cut (J) that have the smallest count has the largest price average
 We do so for color and clarity and found that the price dosn't depend on ctegorical features (as there are inverse relation between them and the price )
-### 20)
-
-##### Feature engineering
-
+### 3.2.16 Feature Engineering
 ``` python
+#creating volume column in both tain and test dataframe and drop the x,y and z
 train_df_copy["vol"] = train_df_copy["x"] * train_df_copy["y"] * train_df_copy["z"] # For Categorical Visualization
 # train_df_copy.drop(["x", "y", "z"], axis=1, inplace=True)
 
@@ -218,49 +173,36 @@ train_df.drop(["x", "y", "z"], axis=1, inplace=True)
 test_df["vol"] = test_df["x"] * test_df["y"] * test_df["z"]                         # For Testing
 test_df.drop(["x", "y", "z"], axis=1, inplace=True)
 ```
-we made volume column in both tain and test dataframe and drop the x,y and z
 this reduces the dimensionality as we drop 3 columns and replaces it with one column
 
-### 21)
+### 3.2.17 Countplot 
 ``` python
+This code will generate three side-by-side bar plots showing the mean volume of diamonds grouped by cut, color, and clarity, respectively.
 mean_vol_by_cut     = train_df_copy.groupby("cut")["vol"].mean().reindex(cut_column_unique_ordered)
 mean_vol_by_color   = train_df_copy.groupby("color")["vol"].mean().reindex(color_column_unique_ordered)
 mean_vol_by_clarity = train_df_copy.groupby("clarity")["vol"].mean().reindex(clarity_column_unique_ordered)
-
 fig, axes = plt.subplots(1, 3, figsize=(18, 6))
-
 # Mean volume by cut
 sns.barplot(x=mean_vol_by_cut.index, y=mean_vol_by_cut.values, palette='rocket', ax=axes[0])
 axes[0].set_title("Mean Volume of Diamonds by Cut")
 axes[0].set_xlabel("Cut")
 axes[0].set_ylabel("Mean Volume")
-
 # Mean volume by color
 sns.barplot(x=mean_vol_by_color.index, y=mean_vol_by_color.values, palette='rocket', ax=axes[1])
 axes[1].set_title("Mean Volume of Diamonds by Color")
 axes[1].set_xlabel("Color")
 axes[1].set_ylabel("Mean Volume")
-
 # Mean volume by clarity
 sns.barplot(x=mean_vol_by_clarity.index, y=mean_vol_by_clarity.values, palette='rocket', ax=axes[2])
 axes[2].set_title("Mean Volume of Diamonds by Clarity")
 axes[2].set_xlabel("Clarity")
 axes[2].set_ylabel("Mean Volume")
 
-## Adjust layout
-# plt.tight_layout()
-
-# Show plot
 plt.show()
 ```
-This code will generate three side-by-side bar plots showing the mean volume of diamonds grouped by cut, color, and clarity, respectively.
+**insights :**
+- The category with highest volume has highest price
 
-####the insights we found :
-
-
-1) as the volume of the diamond increases as the price increase
-2) the category with highest volume has highest price
-3) 
 
 
 
