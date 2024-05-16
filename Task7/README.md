@@ -6,7 +6,9 @@ plt.subplots(figsize=(12, 8))
 sns.heatmap(train_df.corr(), annot=True)
 ```
 this heatmap code that visulizes the correlation between the numerical features 
-the  insights we found :
+
+####the  insights we found :
+
 1- there is strong direct correlation between price (target coulmn) and carat,x,y,z
 2- there is inverse relation between the categorical features and the price
 ### 2)
@@ -14,7 +16,9 @@ the  insights we found :
 train_df.iloc[:, :].hist(figsize=(20, 15), bins=50)
 ```
 this histogram code that visulizes the distribution of data
-the insights we found :
+
+####the insights we found :
+
 1- there are right skew in almost numerical features and this leads us to think of the outliers and if there are outliers especially in price column
 2- the ranges of data varies that leads us to say that the data needs to be scaled
 ### 3)
@@ -50,7 +54,10 @@ for col in train_df.columns[:7]:
 This code is designed to:
 1) Detect Outliers: Identify potential outliers in the first seven columns of the DataFrame using the IQR method.
 2) Summarize Outliers: Print a summary of the outlier detection results for each of these columns, including the count of outliers and the calculated lower and upper bounds for identifying outliers.
-#### the insights we found :
+
+####the insights we found :
+
+
 1) As we thought before there are alot of outliers
 2) in price column there are  2844 outliers
 3) in depth column there are  2182 outliers
@@ -61,7 +68,10 @@ This code is designed to:
 sns.scatterplot(x=train_df["carat"], y=train_df["price"])        
 ```
 scatter plot visualizes the correlation between two numerical values
-#### the insights we found :
+
+####the insights we found :
+
+
 1) there are noticed outliers in carat after value 3
 ### 6)
 ``` python
@@ -75,7 +85,10 @@ We found there are 21 rows So,we drop it as it is a small value to drop (It wont
 sns.scatterplot(x=train_df["depth"], y=train_df["price"])      
 ```
 scatter plot visualizes the correlation between two numerical values
-#### the insights we found :
+
+####the insights we found :
+
+
 1) there are noticed outliers in depth  before the value 50 and after value 75 
 ### 8)
 ``` python
@@ -89,7 +102,10 @@ We found there are 14 rows So,we drop it as it is a small value to drop (It wont
 sns.scatterplot(x=train_df["table"], y=train_df["price"])     
 ```
 scatter plot visualizes the correlation between two numerical values
-#### the insights we found :
+
+####the insights we found :
+
+
 1) there are noticed outliers in table  before the value 50 and after value 70 
 ### 10)
 ``` python
@@ -173,12 +189,17 @@ plt.show()
 ```
 This code will generate two side-by-side plots: one showing the count of diamonds for each cut category and another showing the mean price of diamonds for each cut category.
 We found there are 0 rows So,we drop it to make sure that there is not
-#### the insights we found :
+
+####the insights we found :
+
+
 1) cut (J) that have the smallest count has the largest price average
 ### 17)
 We do so for color and clarity and found that the price dosn't depend on ctegorical features (as there are inverse relation between them and the price )
 ### 18)
+
 ##### Feature engineering
+
 ``` python
 train_df_copy["vol"] = train_df_copy["x"] * train_df_copy["y"] * train_df_copy["z"] # For Categorical Visualization
 # train_df_copy.drop(["x", "y", "z"], axis=1, inplace=True)
@@ -225,7 +246,10 @@ axes[2].set_ylabel("Mean Volume")
 plt.show()
 ```
 This code will generate three side-by-side bar plots showing the mean volume of diamonds grouped by cut, color, and clarity, respectively.
-#### the insights we found:
+
+####the insights we found :
+
+
 1) as the volume of the diamond increases as the price increase
 2) the category with highest volume has highest price
 3) 
