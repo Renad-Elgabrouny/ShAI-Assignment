@@ -7,7 +7,7 @@ sns.heatmap(train_df.corr(), annot=True)
 ```
 this heatmap code that visulizes the correlation between the numerical features 
 
-####the  insights we found :
+the  insights we found :
 
 1- there is strong direct correlation between price (target coulmn) and carat,x,y,z
 2- there is inverse relation between the categorical features and the price
@@ -17,7 +17,7 @@ train_df.iloc[:, :].hist(figsize=(20, 15), bins=50)
 ```
 this histogram code that visulizes the distribution of data
 
-####the insights we found :
+the insights we found :
 
 1- there are right skew in almost numerical features and this leads us to think of the outliers and if there are outliers especially in price column
 2- the ranges of data varies that leads us to say that the data needs to be scaled
@@ -31,7 +31,9 @@ for i, cols in enumerate(["carat","depth", "table", "x", "y", "z"], 1):
 plt.show()
 ```
 this boxplot code used to  display the distribution of data based on a five-number summary: minimum, first quartile (Q1), median (Q2), third quartile (Q3), and maximum. It is useful for identifying outliers and understanding the spread and skewness of the data.
+
 the insights we found :
+
 1- there are alot of outliers in the data espacially in carat,depth and price
 ### 4)
 we want to detect the outliers using the interquartile range (IQR)
@@ -55,7 +57,7 @@ This code is designed to:
 1) Detect Outliers: Identify potential outliers in the first seven columns of the DataFrame using the IQR method.
 2) Summarize Outliers: Print a summary of the outlier detection results for each of these columns, including the count of outliers and the calculated lower and upper bounds for identifying outliers.
 
-####the insights we found :
+the insights we found :
 
 
 1) As we thought before there are alot of outliers
@@ -69,7 +71,7 @@ sns.scatterplot(x=train_df["carat"], y=train_df["price"])
 ```
 scatter plot visualizes the correlation between two numerical values
 
-####the insights we found :
+the insights we found :
 
 
 1) there are noticed outliers in carat after value 3
@@ -86,7 +88,7 @@ sns.scatterplot(x=train_df["depth"], y=train_df["price"])
 ```
 scatter plot visualizes the correlation between two numerical values
 
-####the insights we found :
+the insights we found :
 
 
 1) there are noticed outliers in depth  before the value 50 and after value 75 
@@ -103,7 +105,7 @@ sns.scatterplot(x=train_df["table"], y=train_df["price"])
 ```
 scatter plot visualizes the correlation between two numerical values
 
-####the insights we found :
+the insights we found :
 
 
 1) there are noticed outliers in table  before the value 50 and after value 70 
@@ -119,7 +121,9 @@ We found there are 9 rows So,we drop it as it is a small value to drop (It wont 
 sns.scatterplot(data=train_df, x="x", y="price")  
 ```
 scatter plot visualizes the correlation between two numerical values
-#### the insights we found :
+
+the insights we found :
+
 1) there are noticed outliers in x  after value 9 
 ### 12)
 ``` python
@@ -133,37 +137,41 @@ We found there are 10 rows So,we drop it as it is a small value to drop (It wont
 sns.scatterplot(data=train_df, x="y", y="price")
 ```
 scatter plot visualizes the correlation between two numerical values
-#### the insights we found :
+
+the insights we found :
+
 1) there are noticed outliers in y  after value 10
 ### 14)
 ``` python
 print(f"Y Outliers : {len(train_df[train_df['y'] > 10])}") # Visualization
 train_df = train_df[train_df["x"] <= 9]
 ```
-this code gives the number of rows that have values of x more than 10
+this code gives the number of rows that have values of y more than 10
 We found there are 0 rows So,we drop it to make sure that there is not
 ### 15)
 ``` python
 sns.scatterplot(data=train_df, x="z", y="price")
 ```
 scatter plot visualizes the correlation between two numerical values
-#### the insights we found :
+
+the insights we found :
+
 1) there are noticed outliers in z  after value 10
 ### 16)
 ``` python
-print(f"Y Outliers : {len(train_df[train_df['y'] > 10])}") # Visualization
-train_df = train_df[train_df["x"] <= 9]
+print(f"Z Outliers : {len(train_df[(train_df['z'] < 2) | (train_df['z'] > 7)])}") # Visualization
+train_df = train_df[(train_df["z"] >= 2) & (train_df["z"] <= 7)]
 ```
-this code gives the number of rows that have values of x more than 7 and less than 2
+this code gives the number of rows that have values of z more than 7 and less than 2
 We found there are 0 rows So,we drop it to make sure that there is not
 
-### 16)
+### 17)
 ``` python
 train_df["price"].hist(bins=50)
 ```
 this code gives the number of rows that have values of x more than 7 and less than 2
 We found there are 0 rows So,we drop it to make sure that there is not
-### 16)
+### 18)
 ``` python
 ``` python
 mean_price_by_cut = train_df_copy.groupby("cut")["price"].mean().reindex(cut_column_unique_ordered)
@@ -194,9 +202,9 @@ We found there are 0 rows So,we drop it to make sure that there is not
 
 
 1) cut (J) that have the smallest count has the largest price average
-### 17)
+### 19)
 We do so for color and clarity and found that the price dosn't depend on ctegorical features (as there are inverse relation between them and the price )
-### 18)
+### 20)
 
 ##### Feature engineering
 
@@ -213,7 +221,7 @@ test_df.drop(["x", "y", "z"], axis=1, inplace=True)
 we made volume column in both tain and test dataframe and drop the x,y and z
 this reduces the dimensionality as we drop 3 columns and replaces it with one column
 
-### 19)
+### 21)
 ``` python
 mean_vol_by_cut     = train_df_copy.groupby("cut")["vol"].mean().reindex(cut_column_unique_ordered)
 mean_vol_by_color   = train_df_copy.groupby("color")["vol"].mean().reindex(color_column_unique_ordered)
